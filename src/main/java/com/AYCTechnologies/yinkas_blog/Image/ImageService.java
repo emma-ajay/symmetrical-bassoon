@@ -1,17 +1,19 @@
-package com.AYCTechnologies.yinkas_blog.Pdf;
+package com.AYCTechnologies.yinkas_blog.Image;
 
 import com.azure.storage.blob.BlobClientBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class PdfService {
+public class ImageService {
     @Autowired
     BlobClientBuilder client;
 
@@ -19,20 +21,20 @@ public class PdfService {
     ModelMapper modelMapper;
 
     @Autowired
-    PdfRepository pdfRepository;
+    ImageRepository imageRepository;
 
-    public Pdf uploadNewPdf(MultipartFile file){
+    public Image uploadNewImage(MultipartFile file){
 
-        Pdf pdf = new Pdf();
-        String pdfUrl = upload(file);
-        pdf.setFileUrl(pdfUrl);
-//        pdf.setCreatedBy(createdBy);
-//        pdf.setCreatedDate(createdDate);
+        Image image = new Image();
+        String imageUrl = upload(file);
+        image.setImageUrl(imageUrl);
 
-        Pdf result = pdfRepository.save(pdf);
-        return pdfRepository.save(pdf);
+       return imageRepository.save(image);
 
     }
+
+
+
     public String upload(MultipartFile file){
         if(Objects.nonNull(file)&& file.getSize()>0){
             String defaultUrl = "https://yinkablog.blob.core.windows.net/yinkasblog/";
