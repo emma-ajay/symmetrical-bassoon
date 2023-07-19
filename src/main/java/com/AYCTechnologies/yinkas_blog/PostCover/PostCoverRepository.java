@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostCoverRepository extends JpaRepository<PostCover,Long> {
+    PostCover findByPostId(Long postId);
 }

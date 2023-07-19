@@ -34,6 +34,12 @@ public class PostController {
         return ResponseEntity.ok(new ApiResponse(true,"New Post Created",post));
     }
 
+    @GetMapping(path = "/main")
+    public ResponseEntity<?> getMainPost(){
+
+        return ResponseEntity.ok(new ApiResponse(true,"New Post Created",""));
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> getPostById(){
         

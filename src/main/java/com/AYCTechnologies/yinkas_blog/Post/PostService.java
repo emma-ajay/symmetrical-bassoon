@@ -1,13 +1,19 @@
 package com.AYCTechnologies.yinkas_blog.Post;
 
+import com.AYCTechnologies.yinkas_blog.Exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class PostService {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+
 
     public Post createPost(String pdfUrl,String userName, String createDate){
 
@@ -23,6 +29,12 @@ public class PostService {
 
         return postRepository.save(post);
 
+    }
+
+    public Post getMainPost() {
+        Post post = postRepository.findMainPost();
+        if(Objects.isNull(post)) throw new BadRequestException("Error finding main post");
+        return post;
     }
 
 

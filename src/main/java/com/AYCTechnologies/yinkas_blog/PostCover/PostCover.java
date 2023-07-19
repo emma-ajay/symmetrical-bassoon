@@ -27,4 +27,5 @@ public class PostCover {
     private String blurb;
     private String title;
     private String thumbnailUrl;
+    private String publishedDate;
 }
