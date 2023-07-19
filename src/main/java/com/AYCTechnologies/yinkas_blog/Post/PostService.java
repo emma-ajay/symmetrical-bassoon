@@ -12,8 +12,6 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
-    @Autowired
-
 
     public Post createPost(String pdfUrl,String userName, String createDate){
 
