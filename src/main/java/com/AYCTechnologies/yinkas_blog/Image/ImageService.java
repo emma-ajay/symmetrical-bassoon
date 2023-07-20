@@ -18,9 +18,6 @@ public class ImageService {
     BlobClientBuilder client;
 
     @Autowired
-    ModelMapper modelMapper;
-
-    @Autowired
     ImageRepository imageRepository;
 
     public Image uploadNewImage(MultipartFile file){

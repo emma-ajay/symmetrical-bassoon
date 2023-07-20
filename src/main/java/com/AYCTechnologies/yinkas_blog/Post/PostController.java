@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("api/vi/post")
+@RequestMapping("api/v1/post")
 public class PostController {
     @Autowired
     PostService postService;
@@ -23,27 +23,23 @@ public class PostController {
     @Autowired
     PdfService pdfService;
 
-    @PostMapping(path = "" ,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> uploadPost(@ModelAttribute PostForm model , @CurrentUser CustomUserDetails currentUser){
-        if(Objects.isNull(model)) throw new BadRequestException("Include a pdf");
+    @PostMapping(path = "")
+    public ResponseEntity<?> uploadPost(@RequestBody CreatePostDTO  model , @CurrentUser CustomUserDetails currentUser){
         String userName = currentUser.getName();
-        Pdf pdf = pdfService.uploadNewPdf(model.getPdf());
-
-        Post post = postService.createPost(pdf.getFileUrl(),userName, model.getCreatedDate());
-
+        Post post = postService.createPost(model,userName);
         return ResponseEntity.ok(new ApiResponse(true,"New Post Created",post));
     }
 
     @GetMapping(path = "/main")
     public ResponseEntity<?> getMainPost(){
-
-        return ResponseEntity.ok(new ApiResponse(true,"New Post Created",""));
+        Post post = postService.getMainPost();
+        return ResponseEntity.ok(new ApiResponse(true,"New Post Created",post));
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> getPostById(){
-        
-        return ResponseEntity.ok(new ApiResponse(true,"Post"));
+    public ResponseEntity<?> getPostById(@PathVariable Long id){
+        Post post = postService.getPostById(id);
+        return ResponseEntity.ok(new ApiResponse(true,"Post",post));
     }
 
 

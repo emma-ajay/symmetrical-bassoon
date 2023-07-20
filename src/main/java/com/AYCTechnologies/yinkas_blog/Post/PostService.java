@@ -1,9 +1,11 @@
 package com.AYCTechnologies.yinkas_blog.Post;
 
 import com.AYCTechnologies.yinkas_blog.Exceptions.BadRequestException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -12,18 +14,21 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
 
-    public Post createPost(String pdfUrl,String userName, String createDate){
+    public Post createPost(CreatePostDTO model, String userName){
 
         Post post = new Post();
+        post = modelMapper.map(model, Post.class);
         post.setCreatedBy(userName);
-        post.setFileUrl(pdfUrl);
         post.setIsDeleted(Boolean.FALSE);
         post.setIsHidden(Boolean.FALSE);
-        post.setCreatedDate(createDate);
         post.setIsSaved(Boolean.TRUE);
         post.setIsPublished(Boolean.FALSE);
-        post.setIsMain(Boolean.TRUE);
+        post.setIsMain(Boolean.FALSE);
+        List<Post> postList = postRepository.findAll();
+        if(postList.size()==0) post.setIsMain(Boolean.TRUE);
 
         return postRepository.save(post);
 
@@ -36,4 +41,17 @@ public class PostService {
     }
 
 
+    public Post getPostById(Long id) {
+        Post post = postRepository.findPostByPostId(id);
+        if(Objects.isNull(post)) throw new BadRequestException("Error finding post");
+        return post;
+    }
+
+    public void  updatePublishedStatus (Long postId, String publishedDate){
+        Post post = getPostById(postId);
+        post.setPostId(postId);
+        post.setIsPublished(Boolean.TRUE);
+        post.setPublishedDate(publishedDate);
+        Post rs = postRepository.save(post);
+    }
 }

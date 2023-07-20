@@ -26,7 +26,7 @@ public class Post {
 
     private Long userId;
 
-    private String fileUrl;
+    private String content;
 
     private String createdBy;
 
@@ -41,6 +41,8 @@ public class Post {
     private Boolean isDeleted;
 
     private Boolean isMain;
+
+    private String publishedDate;
 
 
 

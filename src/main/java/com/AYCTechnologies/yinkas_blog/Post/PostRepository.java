@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface PostRepository extends JpaRepository<Post,Long> {
     @Query("select u from Post u where u.isMain=true")
     Post findMainPost();
+
+    Post findPostByPostId(Long id);
 }

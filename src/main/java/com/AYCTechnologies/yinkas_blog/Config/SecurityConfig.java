@@ -109,7 +109,7 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers("/swagger-resources/**")
                 .permitAll()
-                .requestMatchers(HttpMethod.POST,"/api/v1/auth**")
+                .requestMatchers(HttpMethod.POST,"/api/v1/auth/**")
                 .permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/v1/image**")
                 .permitAll()
