@@ -32,6 +32,8 @@ public class Html {
 
     private Long postId;
 
+    private Long draftId;
+
 
     public Html(String fileUrl, String createdBy, String createdDate) {
         this.fileUrl = fileUrl;

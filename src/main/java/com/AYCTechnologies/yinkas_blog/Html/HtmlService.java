@@ -45,7 +45,7 @@ public class HtmlService {
         }
     }
 
-    public Html uploadNewHtml(String content, String userName, String createdDate, Long postId){
+    public Html uploadNewHtml(String content, String userName, String createdDate, String type,  Long postId){
 
         MultipartFile file = createHtml(content);
 
@@ -53,6 +53,10 @@ public class HtmlService {
         String htmlUrl = upload(file);
         html.setFileUrl(htmlUrl);
         html.setCreatedBy(userName);
+        if (Objects.equals(type,"draft")){
+            html.setDraftId(postId);
+            html.setPostId(null);
+        }
         html.setPostId(postId);
         html.setCreatedDate(createdDate);
         return htmlRepository.save(html);

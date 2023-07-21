@@ -27,7 +27,7 @@ public class PostService {
 
         Post post = new Post();
         post = modelMapper.map(model, Post.class);
-        Html html = htmlService.uploadNewHtml(model.getContent(),userName, model.getCreatedDate(), post.getPostId());
+        Html html = htmlService.uploadNewHtml(model.getContent(),userName, model.getCreatedDate(), "post",post.getPostId());
         String htmlUrl = html.getFileUrl();
         post.setContent(htmlUrl);
         post.setCreatedBy(userName);

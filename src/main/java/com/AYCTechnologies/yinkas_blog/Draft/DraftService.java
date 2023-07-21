@@ -1,6 +1,8 @@
 package com.AYCTechnologies.yinkas_blog.Draft;
 
 import com.AYCTechnologies.yinkas_blog.Exceptions.BadRequestException;
+import com.AYCTechnologies.yinkas_blog.Html.Html;
+import com.AYCTechnologies.yinkas_blog.Html.HtmlService;
 import com.AYCTechnologies.yinkas_blog.PostCover.PostCover;
 import com.AYCTechnologies.yinkas_blog.Response.PagedResponse;
 import org.modelmapper.ModelMapper;
@@ -24,10 +26,18 @@ public class DraftService {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    HtmlService htmlService;
+
+
+
     public Draft createDraft(DraftDTO draftDTO, String userName, Long userId){
 
         Draft draft = new Draft();
         draft = modelMapper.map(draftDTO, Draft.class);
+        Html html = htmlService.uploadNewHtml(draftDTO.getContent(),userName, draftDTO.getLastModifiedDate(), "draft", draft.getDraftId());
+        String htmlUrl = html.getFileUrl();
+        draft.setContent(htmlUrl);
         draft.setUserId(userId);
         draft.setCreatedBy(userName);
         draft.setIsPublished(Boolean.FALSE);

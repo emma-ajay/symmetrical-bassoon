@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PostCoverForm {
     private MultipartFile thumbnail;
     private String blurb;
+    private String description;
     private String title;
     private String publishedDate;
     private String category;
