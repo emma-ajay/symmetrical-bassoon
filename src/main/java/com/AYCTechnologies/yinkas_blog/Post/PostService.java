@@ -1,6 +1,8 @@
 package com.AYCTechnologies.yinkas_blog.Post;
 
 import com.AYCTechnologies.yinkas_blog.Exceptions.BadRequestException;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,12 @@ public class PostService {
 
     public Post createPost(CreatePostDTO model, String userName){
 
+        Safelist whitelist = Safelist.none();
+        String sanitizedContent = Jsoup.clean(model.getContent(), whitelist);
+
         Post post = new Post();
-        post = modelMapper.map(model, Post.class);
+        post.setContent(sanitizedContent);
+        post.setCreatedDate(model.getCreatedDate());
         post.setCreatedBy(userName);
         post.setIsDeleted(Boolean.FALSE);
         post.setIsHidden(Boolean.FALSE);
