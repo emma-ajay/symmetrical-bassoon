@@ -33,7 +33,7 @@ public class DraftController {
         return ResponseEntity.ok(new ApiResponse(true,"Post",draft));
     }
 
-    @GetMapping(path = "/{userId}/user")
+    @GetMapping(path = "/user")
     public PagedResponse<?> getDraftByUser(@CurrentUser CustomUserDetails currentUser,
                                            @RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                            @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,

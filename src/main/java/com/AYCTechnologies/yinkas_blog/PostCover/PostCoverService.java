@@ -32,7 +32,7 @@ public class PostCoverService {
 
 
     public Post getMainPost() {
-        Post post = postRepository.findMainPost();
+        Post post = postRepository.findMainPost(Boolean.TRUE);
         if (Objects.isNull(post)) throw new BadRequestException("Error finding main post");
         return post;
     }

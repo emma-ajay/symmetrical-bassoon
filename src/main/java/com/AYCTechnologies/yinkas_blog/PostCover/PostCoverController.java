@@ -56,6 +56,11 @@ public class PostCoverController {
 
         return postCoverService.postCoverListByCategory(page, size, sort,category);
     }
+    @GetMapping(path = "/main")
+    public ResponseEntity<?> getMainPost(){
+        PostCover post = postCoverService.getMainPostCover();
+        return ResponseEntity.ok(new ApiResponse(true,"New Post Created",post));
+    }
 }
 
 

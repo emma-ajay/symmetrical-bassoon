@@ -27,7 +27,7 @@ public class PostController {
     @GetMapping(path = "/main")
     public ResponseEntity<?> getMainPost(){
         Post post = postService.getMainPost();
-        return ResponseEntity.ok(new ApiResponse(true,"New Post Created",post));
+        return ResponseEntity.ok(new ApiResponse(true,"Main Post",post));
     }
 
     @GetMapping(path = "/{id}")
