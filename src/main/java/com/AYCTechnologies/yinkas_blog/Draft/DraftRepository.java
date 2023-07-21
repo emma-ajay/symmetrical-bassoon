@@ -13,6 +13,7 @@ public interface DraftRepository extends JpaRepository<Draft,Long> {
     @Query("select u from Draft u where u.isPublished=false")
     Page<Draft> findDrafts(Pageable pageable);
 
+
     Draft findDraftByDraftId(Long draftId);
 
     Page<Draft> findDraftByUserId(Pageable pageable, Long userId);

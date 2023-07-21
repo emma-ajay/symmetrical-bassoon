@@ -57,12 +57,12 @@ public class DataSeed {
                 userRepository.save(user1);
             }
 
-            if(Objects.nonNull(roleRepository.findByName(RoleName.ROLE_CREATOR))){
+            if(Objects.isNull(roleRepository.findByName(RoleName.ROLE_CREATOR))){
                 Role role1 = new Role(RoleName.ROLE_CREATOR);
                 roleRepository.save(role1);
             }
 
-            if(Objects.nonNull(roleRepository.findByName(RoleName.ROLE_USER))){
+            if(Objects.isNull(roleRepository.findByName(RoleName.ROLE_USER))){
                 Role role2 = new Role(RoleName.ROLE_USER);
                 roleRepository.save(role2);
             }
