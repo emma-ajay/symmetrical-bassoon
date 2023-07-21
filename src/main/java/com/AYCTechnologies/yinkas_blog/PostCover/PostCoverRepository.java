@@ -15,5 +15,5 @@ public interface PostCoverRepository extends JpaRepository<PostCover,Long> {
     Page<PostCover> findAllPostCover(Pageable pageable);
 
     @Query("select u from PostCover u where u.category = :category")
-    Page<PostCover> findPostCoverByCategory(Pageable pageable, @Param("category") Long category);
+    Page<PostCover> findPostCoverByCategory(Pageable pageable, @Param("category") String category);
 }

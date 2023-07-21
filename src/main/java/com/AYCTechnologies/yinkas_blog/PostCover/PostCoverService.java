@@ -80,5 +80,32 @@ public class PostCoverService {
 
         }
     }
+
+    public PagedResponse<?> postCoverListByCategory(int page, int size, String sort, String category) {
+        if (Objects.equals(sort, "DESC")) {
+            Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "published_date");
+            Page<PostCover> postCover = postCoverRepository.findPostCoverByCategory(pageable,category);
+            if (postCover.getTotalElements() == 0) {
+                return new PagedResponse<>(Collections.emptyList(), postCover.getNumber(),
+                        postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
+            }
+            List<PostCover> postCovers = postCover.toList();
+
+            return new PagedResponse<>(postCovers, postCover.getNumber(),
+                    postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
+        } else {
+            Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "published_date");
+            Page<PostCover> postCover = postCoverRepository.findPostCoverByCategory(pageable,category);
+            if (postCover.getTotalElements() == 0) {
+                return new PagedResponse<>(Collections.emptyList(), postCover.getNumber(),
+                        postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
+            }
+            List<PostCover> postCovers = postCover.toList();
+
+            return new PagedResponse<>(postCovers, postCover.getNumber(),
+                    postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
+
+        }
+    }
 }
 

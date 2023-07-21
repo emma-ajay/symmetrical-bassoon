@@ -30,26 +30,33 @@ public class PostCoverController {
     @Autowired
     ImageService imageService;
 
-    @PostMapping(path = "/{postId}/post",consumes = "multipart/form-data")
-    public ResponseEntity<?> publishPost(@ModelAttribute PostCoverForm model ,@PathVariable Long postId, @CurrentUser CustomUserDetails currentUser){
+    @PostMapping(path = "/{postId}/post", consumes = "multipart/form-data")
+    public ResponseEntity<?> publishPost(@ModelAttribute PostCoverForm model, @PathVariable Long postId, @CurrentUser CustomUserDetails currentUser) {
 //        if(Objects.isNull(model.getThumbnail())) throw new BadRequestException("Include a thumbnail");
         String userName = currentUser.getName();
         Image image = imageService.uploadNewImage(model.getThumbnail());
-        PostCover post = postCoverService.publish(model,userName,image.getImageUrl(),postId);
+        PostCover post = postCoverService.publish(model, userName, image.getImageUrl(), postId);
         postService.updatePublishedStatus(postId, model.getPublishedDate());
-        return ResponseEntity.ok(new ApiResponse(true,"New Post Created",post));
+        return ResponseEntity.ok(new ApiResponse(true, "New Post Created", post));
     }
 
 
     @GetMapping("")
-    public PagedResponse<?> getAllPostsCover(@RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page, @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size, @RequestParam(name = "sort" ,defaultValue = "DESC") String sort){
+    public PagedResponse<?> getAllPostsCover(@RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                             @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
+                                             @RequestParam(name = "sort", defaultValue = "DESC") String sort) {
 
-        return postCoverService.postCoverList(page,size,sort);
+        return postCoverService.postCoverList(page, size, sort);
     }
 
+    @GetMapping(value = "/{category}/category")
+    public PagedResponse<?> getAllPostsCategory(@RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                             @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
+                                             @RequestParam(name = "sort", defaultValue = "DESC") String sort, @PathVariable String category) {
 
-
-
-
-
+        return postCoverService.postCoverListByCategory(page, size, sort,category);
+    }
 }
+
+
+
