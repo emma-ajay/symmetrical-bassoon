@@ -1,8 +1,8 @@
 package com.AYCTechnologies.yinkas_blog.Post;
 
 import com.AYCTechnologies.yinkas_blog.Exceptions.BadRequestException;
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Safelist;
+import com.AYCTechnologies.yinkas_blog.Html.Html;
+import com.AYCTechnologies.yinkas_blog.Html.HtmlService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,17 @@ public class PostService {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    HtmlService htmlService;
+
     public Post createPost(CreatePostDTO model, String userName){
 
-        Safelist whitelist = Safelist.none();
-        String sanitizedContent = Jsoup.clean(model.getContent(), whitelist);
 
         Post post = new Post();
-        post.setContent(sanitizedContent);
-        post.setCreatedDate(model.getCreatedDate());
+        post = modelMapper.map(model, Post.class);
+        Html html = htmlService.uploadNewHtml(model.getContent(),userName, model.getCreatedDate(), post.getPostId());
+        String htmlUrl = html.getFileUrl();
+        post.setContent(htmlUrl);
         post.setCreatedBy(userName);
         post.setIsDeleted(Boolean.FALSE);
         post.setIsHidden(Boolean.FALSE);

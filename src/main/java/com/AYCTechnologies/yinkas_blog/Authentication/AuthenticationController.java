@@ -140,7 +140,7 @@ public class AuthenticationController {
     }
 
     @Transactional
-    @PostMapping("/register/Creator")
+    @PostMapping("/register/creator")
     public ResponseEntity<? > registerCreator(@RequestBody RegisterRequest registerRequest, HttpServletRequest request) throws MessagingException, IOException {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),

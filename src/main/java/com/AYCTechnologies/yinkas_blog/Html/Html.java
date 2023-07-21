@@ -1,4 +1,4 @@
-package com.AYCTechnologies.yinkas_blog.Pdf;
+package com.AYCTechnologies.yinkas_blog.Html;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,17 +12,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Pdf {
+public class Html {
     @Id
-    @SequenceGenerator(name = "pdf_sequence",
-            sequenceName = "pdf_sequence",
+    @SequenceGenerator(name = "html_sequence",
+            sequenceName = "html_sequence",
             allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "pdf_sequence"
+            generator = "html_sequence"
     )
 
-    private Long pdfId;
+    private Long htmId;
 
     private String fileUrl;
 
@@ -30,7 +30,10 @@ public class Pdf {
 
     private String createdDate;
 
-    public Pdf(String fileUrl, String createdBy, String createdDate) {
+    private Long postId;
+
+
+    public Html(String fileUrl, String createdBy, String createdDate) {
         this.fileUrl = fileUrl;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
