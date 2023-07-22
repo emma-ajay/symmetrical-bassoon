@@ -62,7 +62,7 @@ public class DraftService {
 
     public PagedResponse<?> getAllDrafts(int page, int size, String sort) {
         if (Objects.equals(sort, "DESC")) {
-            Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "last_modified_date");
+            Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "lastModifiedDate");
             Page<Draft> drafts = draftRepository.findDrafts(pageable);
             if (drafts.getTotalElements() == 0) {
                 return new PagedResponse<>(Collections.emptyList(), drafts.getNumber(),
@@ -73,7 +73,7 @@ public class DraftService {
             return new PagedResponse<>(draftList, drafts.getNumber(),
                     drafts.getSize(), drafts.getTotalElements(), drafts.getTotalPages(), drafts.isLast());
         } else {
-            Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "last_modified_date");
+            Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "lastModifiedDate");
             Page<Draft> drafts = draftRepository.findDrafts(pageable);
             if (drafts.getTotalElements() == 0) {
                 return new PagedResponse<>(Collections.emptyList(), drafts.getNumber(),

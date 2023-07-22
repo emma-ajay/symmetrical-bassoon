@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post,Long> {
-    @Query("select u from Post u where u.isMain= :check")
-    Post findMainPost(@Param("check") Boolean check);
+    @Query(value = "select * from posts where is_main=true",nativeQuery = true)
+    Post findMainPost();
 
+    @Query(value = "select u from Post u where u.postId =?1")
     Post findPostByPostId(Long id);
 }

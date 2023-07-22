@@ -14,12 +14,12 @@ import lombok.Setter;
 @Setter
 public class PostCover {
     @Id
-    @SequenceGenerator(name = "post_sequence",
-            sequenceName = "post_sequence",
+    @SequenceGenerator(name = "post_cover_sequence",
+            sequenceName = "post_cover_sequence",
             allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "post_sequence"
+            generator = "post_cover_sequence"
     )
 
     private Long postCoverId;

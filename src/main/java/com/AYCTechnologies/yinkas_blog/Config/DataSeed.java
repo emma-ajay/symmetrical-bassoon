@@ -49,7 +49,6 @@ public class DataSeed {
                         password,
                         Boolean.TRUE,
                         Boolean.FALSE,
-                        "Ajayi Emmanuel",
                         currentDate
 
                 );

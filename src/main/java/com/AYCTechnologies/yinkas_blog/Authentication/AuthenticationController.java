@@ -236,12 +236,12 @@ public class AuthenticationController {
 
     public void welcomeEmail(int otp, String name , String email,HttpServletRequest request) throws MessagingException, IOException {
         String activationUrl= activationUrl(email,request,otp);
-        String content = Files.asCharSource(new File("src/main/java/com/ajayCodes/CDCAPI/welcomeEmail.html"), StandardCharsets.UTF_8).read();
+        String content = Files.asCharSource(new File("src/main/resources/templates/otp.html"), StandardCharsets.UTF_8).read();
         content = content.replace("[[URL]]",activationUrl);
-        content = content.replace("[[username]]",name);
+        content = content.replace("[[otp]]",String.valueOf(otp));
 
 
-        emailService.sendMessage(email, "Welcome To CDC "+ name,content);
+        emailService.sendMessage(email, "Welcome To The Lifestyle Blog "+ name,content);
 
     }
 

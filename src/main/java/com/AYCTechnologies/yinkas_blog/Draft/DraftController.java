@@ -41,4 +41,11 @@ public class DraftController {
         Long userId = currentUser.getUserId();
         return draftService.getDraftsByUser(page,size,sort,userId);
     }
+
+    @GetMapping("")
+    public PagedResponse<?> getAllDrafts( @RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                          @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
+                                          @RequestParam(name = "sort" ,defaultValue = "DESC") String sort){
+        return draftService.getAllDrafts(page,size,sort);
+    }
 }

@@ -117,6 +117,8 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/publish")
                 .permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/v1/post/**")
+                .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/v1/publish/**")
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,"/activate/**")

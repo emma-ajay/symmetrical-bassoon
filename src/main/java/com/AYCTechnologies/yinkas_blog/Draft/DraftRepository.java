@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DraftRepository extends JpaRepository<Draft,Long> {
-    @Query("select u from Draft u where u.isPublished=false")
+    @Query("select u from Draft u")
     Page<Draft> findDrafts(Pageable pageable);
 
 

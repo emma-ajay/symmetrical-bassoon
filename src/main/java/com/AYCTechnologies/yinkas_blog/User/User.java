@@ -60,7 +60,7 @@ import java.util.Set;
     }
 
 
-    public User(String name, String userName, String email, String password, Boolean isActivated, Boolean isDisabled, String createdDate, String lastLogin) {
+    public User(String name, String userName, String email, String password, Boolean isActivated, Boolean isDisabled, String createdDate) {
         this.name = name;
         this.userName = userName;
         this.email = email;
@@ -68,6 +68,5 @@ import java.util.Set;
         this.isActivated = isActivated;
         this.isDisabled = isDisabled;
         this.createdDate = createdDate;
-        this.lastLogin = lastLogin;
     }
 }
