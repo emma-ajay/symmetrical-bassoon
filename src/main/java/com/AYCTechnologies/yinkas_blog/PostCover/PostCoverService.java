@@ -48,6 +48,8 @@ public class PostCoverService {
     }
 
     public PostCover publish(PostCoverForm model, String userName, String thumbnailUrl,Long postId) {
+        Post post = postRepository.findPostByPostId(postId);
+        if (post.getIsPublished()) throw new BadRequestException("This post has already been published");
         PostCover postCover = new PostCover();
         postCover = modelMapper.map(model, PostCover.class);
         postCover.setThumbnailUrl(thumbnailUrl);
@@ -107,6 +109,12 @@ public class PostCoverService {
                     postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
 
         }
+    }
+
+    public PostCover getPostCoverByPostId(Long id) {
+        PostCover postCover = postCoverRepository.findPostCoverByPostId(id);
+        if(Objects.isNull(postCover)) throw new BadRequestException("PostCover with Post id doesn't exist");
+        return postCover;
     }
 }
 

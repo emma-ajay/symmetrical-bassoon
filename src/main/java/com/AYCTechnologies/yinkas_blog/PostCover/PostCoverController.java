@@ -61,6 +61,11 @@ public class PostCoverController {
         PostCover post = postCoverService.getMainPostCover();
         return ResponseEntity.ok(new ApiResponse(true,"New Post Created",post));
     }
+    @GetMapping(value = "/{id}/post")
+    public ResponseEntity<?> getPostCoverByPostId(@PathVariable Long id){
+        PostCover postCover = postCoverService.getPostCoverByPostId(id);
+        return ResponseEntity.ok(new ApiResponse(true,"Post Cover",postCover));
+    }
 }
 
 

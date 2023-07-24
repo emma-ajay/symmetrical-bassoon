@@ -113,4 +113,10 @@ public class DraftService {
 
         }
     }
+
+    public void publishDraft(Long draftId) {
+        Draft draft = getDraftById(draftId);
+        draft.setIsPublished(Boolean.TRUE);
+
+    }
 }

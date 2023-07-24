@@ -22,13 +22,14 @@ public class PostService {
     @Autowired
     HtmlService htmlService;
 
-    public Post createPost(CreatePostDTO model, String userName){
+    public Post createPost(CreatePostDTO model, String userName,Long userId){
 
 
         Post post = new Post();
         post = modelMapper.map(model, Post.class);
         Html html = htmlService.uploadNewHtml(model.getContent(),userName, model.getCreatedDate(), "post",post.getPostId());
         String htmlUrl = html.getFileUrl();
+        post.setUserId(userId);
         post.setContent(htmlUrl);
         post.setCreatedBy(userName);
         post.setIsDeleted(Boolean.FALSE);
@@ -63,5 +64,15 @@ public class PostService {
         post.setIsPublished(Boolean.TRUE);
         post.setPublishedDate(publishedDate);
         Post rs = postRepository.save(post);
+    }
+
+    public Post updateMainPost(Long id) {
+        Post post = getMainPost();
+        post.setIsMain(Boolean.FALSE);
+        Post rs = postRepository.save(post);
+
+        Post newMainPost = postRepository.findPostByPostId(id);
+        post.setIsMain(Boolean.TRUE);
+        return postRepository.save(newMainPost);
     }
 }
