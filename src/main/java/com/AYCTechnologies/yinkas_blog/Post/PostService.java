@@ -67,12 +67,18 @@ public class PostService {
     }
 
     public Post updateMainPost(Long id) {
-        Post post = getMainPost();
+        Post post = postRepository.findMainPost();
+        post.setPostId(post.getPostId());
         post.setIsMain(Boolean.FALSE);
         Post rs = postRepository.save(post);
 
         Post newMainPost = postRepository.findPostByPostId(id);
+        post.setPostId(id);
         post.setIsMain(Boolean.TRUE);
-        return postRepository.save(newMainPost);
+        Post result = postRepository.save(newMainPost);
+        return result;
     }
 }
+
+
+

@@ -6,6 +6,7 @@ import com.AYCTechnologies.yinkas_blog.PostCover.PostCover;
 import com.AYCTechnologies.yinkas_blog.Response.ApiResponse;
 import com.AYCTechnologies.yinkas_blog.Security.CurrentUser;
 import com.AYCTechnologies.yinkas_blog.Security.CustomUserDetails;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class PostController {
     DraftService draftService;
 
     @PostMapping(path = "")
-    public ResponseEntity<?> uploadPost(@RequestBody CreatePostDTO  model , @CurrentUser CustomUserDetails currentUser, @RequestParam Long draftId ){
-        if(Objects.nonNull(draftId)){
+    public ResponseEntity<?> uploadPost(@RequestBody CreatePostDTO  model , @CurrentUser CustomUserDetails currentUser, @RequestParam(name = "draftId", defaultValue = "0") Long draftId  ){
+        if(draftId != 0){
             draftService.publishDraft(draftId);
         }
         String userName = currentUser.getName();
@@ -50,6 +51,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}/main")
+    @Transactional
     public ResponseEntity<?> updateMainPost(@PathVariable Long id, @CurrentUser CustomUserDetails currentUser){
         Post post = postService.updateMainPost(id);
         return ResponseEntity.ok(new ApiResponse(true,"Updated Main post",post));
