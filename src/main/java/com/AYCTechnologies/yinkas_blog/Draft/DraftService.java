@@ -119,4 +119,10 @@ public class DraftService {
         draft.setIsPublished(Boolean.TRUE);
 
     }
+
+    public Draft deleteDraftById(Long id) {
+        Draft draft = getDraftById(id);
+        draft.setIsHidden(Boolean.TRUE);
+        return draftRepository.save(draft);
+    }
 }

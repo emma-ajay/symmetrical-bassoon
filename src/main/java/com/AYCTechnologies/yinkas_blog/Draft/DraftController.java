@@ -30,7 +30,7 @@ public class DraftController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> getDraftById(@PathVariable Long id){
         Draft draft = draftService.getDraftById(id);
-        return ResponseEntity.ok(new ApiResponse(true,"Post",draft));
+        return ResponseEntity.ok(new ApiResponse(true,"Draft",draft));
     }
 
     @GetMapping(path = "/user")
@@ -47,5 +47,10 @@ public class DraftController {
                                           @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
                                           @RequestParam(name = "sort" ,defaultValue = "DESC") String sort){
         return draftService.getAllDrafts(page,size,sort);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDraftById(@PathVariable Long id){
+        Draft draft = draftService.deleteDraftById(id);
+        return ResponseEntity.ok(new ApiResponse(true,"Draft deleted"));
     }
 }

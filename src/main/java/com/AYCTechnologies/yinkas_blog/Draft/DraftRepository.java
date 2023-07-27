@@ -16,7 +16,8 @@ public interface DraftRepository extends JpaRepository<Draft,Long> {
 
     Draft findDraftByDraftId(Long draftId);
 
-    Page<Draft> findDraftByUserId(Pageable pageable, Long userId);
+    @Query(value = "select u from Draft u where u.userId = :userId and isPublished = false  and isHidden = false  ")
+    Page<Draft> findDraftByUserId(Pageable pageable,@Param("userId") Long userId);
 
 
 //    @Query("select u from Draft u where u.isPublished=false AND where u.userId = :userId")
