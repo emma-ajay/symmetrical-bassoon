@@ -11,6 +11,7 @@ import com.AYCTechnologies.yinkas_blog.Response.ApiResponse;
 import com.AYCTechnologies.yinkas_blog.Response.PagedResponse;
 import com.AYCTechnologies.yinkas_blog.Security.CurrentUser;
 import com.AYCTechnologies.yinkas_blog.Security.CustomUserDetails;
+import com.AYCTechnologies.yinkas_blog.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +35,9 @@ public class PostCoverController {
     public ResponseEntity<?> publishPost(@ModelAttribute PostCoverForm model, @PathVariable Long postId, @CurrentUser CustomUserDetails currentUser) {
 //        if(Objects.isNull(model.getThumbnail())) throw new BadRequestException("Include a thumbnail");
         String userName = currentUser.getName();
+        Long userId = currentUser.getUserId();
         Image image = imageService.uploadNewImage(model.getThumbnail());
-        PostCover post = postCoverService.publish(model, userName, image.getImageUrl(), postId);
+        PostCover post = postCoverService.publish(model, userName, image.getImageUrl(), postId,userId);
         postService.updatePublishedStatus(postId, model.getPublishedDate());
         return ResponseEntity.ok(new ApiResponse(true, "New Post Created", post));
     }
@@ -60,6 +62,14 @@ public class PostCoverController {
     public ResponseEntity<?> getMainPost(){
         PostCover post = postCoverService.getMainPostCover();
         return ResponseEntity.ok(new ApiResponse(true,"New Post Created",post));
+    }
+    @GetMapping(path = "/user")
+    public PagedResponse<?> getPostByUser(@RequestParam(name = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                           @RequestParam(name = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
+                                           @RequestParam(name = "sort", defaultValue = "DESC") String sort,@CurrentUser CustomUserDetails currentUser){
+        Long userId = currentUser.getUserId();
+        return postCoverService.postCoverListByUser(page,size,sort,userId);
+
     }
     @GetMapping(value = "/{id}/post")
     public ResponseEntity<?> getPostCoverByPostId(@PathVariable Long id){

@@ -47,7 +47,7 @@ public class PostCoverService {
 
     }
 
-    public PostCover publish(PostCoverForm model, String userName, String thumbnailUrl,Long postId) {
+    public PostCover publish(PostCoverForm model, String userName, String thumbnailUrl,Long postId,Long userId) {
         Post post = postRepository.findPostByPostId(postId);
         if (post.getIsPublished()) throw new BadRequestException("This post has already been published");
         PostCover postCover = new PostCover();
@@ -55,6 +55,7 @@ public class PostCoverService {
         postCover.setThumbnailUrl(thumbnailUrl);
         postCover.setPostId(postId);
         postCover.setIsDeleted(Boolean.FALSE);
+        postCover.setUserId(userId);
         return postCoverRepository.save(postCover);
     }
 
@@ -116,6 +117,34 @@ public class PostCoverService {
         PostCover postCover = postCoverRepository.findPostCoverByPostId(id);
         if(Objects.isNull(postCover)) throw new BadRequestException("PostCover with Post id doesn't exist");
         return postCover;
+    }
+
+
+    public PagedResponse<?> postCoverListByUser(int page, int size, String sort, Long userId) {
+        if (Objects.equals(sort, "DESC")) {
+            Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "publishedDate");
+            Page<PostCover> postCover = postCoverRepository.findPostCoverByUserId(pageable,userId);
+            if (postCover.getTotalElements() == 0) {
+                return new PagedResponse<>(Collections.emptyList(), postCover.getNumber(),
+                        postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
+            }
+            List<PostCover> postCovers = postCover.toList();
+
+            return new PagedResponse<>(postCovers, postCover.getNumber(),
+                    postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
+        } else {
+            Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "publishedDate");
+            Page<PostCover> postCover = postCoverRepository.findPostCoverByUserId(pageable,userId);
+            if (postCover.getTotalElements() == 0) {
+                return new PagedResponse<>(Collections.emptyList(), postCover.getNumber(),
+                        postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
+            }
+            List<PostCover> postCovers = postCover.toList();
+
+            return new PagedResponse<>(postCovers, postCover.getNumber(),
+                    postCover.getSize(), postCover.getTotalElements(), postCover.getTotalPages(), postCover.isLast());
+
+        }
     }
 }
 

@@ -21,4 +21,7 @@ public interface PostCoverRepository extends JpaRepository<PostCover,Long> {
 
     @Query("select u from PostCover u where u.postId =?1")
     PostCover findPostCoverByPostId(Long id);
+
+    @Query("select u from PostCover u where u.userId =?1")
+    Page<PostCover> findPostCoverByUserId(Pageable pageable, Long userId);
 }

@@ -24,6 +24,7 @@ public class PostCover {
 
     private Long postCoverId;
     private Long postId;
+    private Long userId;
     @Column(columnDefinition="text")
     private String blurb;
     @Column(columnDefinition="text")
