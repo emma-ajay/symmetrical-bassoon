@@ -24,9 +24,12 @@ public class PostCover {
 
     private Long postCoverId;
     private Long postId;
+    @Column(columnDefinition="text")
     private String blurb;
+    @Column(columnDefinition="text")
     private String title;
     private String thumbnailUrl;
+    @Column(columnDefinition="text")
     private String description;
     private String publishedDate;
     private String category;
