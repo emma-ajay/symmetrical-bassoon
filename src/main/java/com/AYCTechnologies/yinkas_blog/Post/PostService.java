@@ -5,6 +5,7 @@ import com.AYCTechnologies.yinkas_blog.Html.Html;
 import com.AYCTechnologies.yinkas_blog.Html.HtmlService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,17 +67,21 @@ public class PostService {
         Post rs = postRepository.save(post);
     }
 
-    public Post updateMainPost(Long id) {
-        Post post = postRepository.findMainPost();
-        post.setPostId(post.getPostId());
-        post.setIsMain(Boolean.FALSE);
-        Post rs = postRepository.save(post);
 
+    public Post updateMainPost(Long id) {
+        removeMain();
         Post newMainPost = postRepository.findPostByPostId(id);
-        post.setPostId(id);
-        post.setIsMain(Boolean.TRUE);
+        newMainPost.setPostId(id);
+        newMainPost.setIsMain(Boolean.TRUE);
         Post result = postRepository.save(newMainPost);
         return result;
+    }
+    public void removeMain(){
+        Post post = postRepository.findMainPost();
+        Long id = post.getPostId();
+        post.setPostId(id);
+        post.setIsMain(Boolean.FALSE);
+        Post rs = postRepository.save(post);
     }
 }
 

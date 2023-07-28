@@ -32,5 +32,6 @@ public class PostCover {
     @Column(columnDefinition="text")
     private String description;
     private String publishedDate;
+    private Boolean isDeleted;
     private String category;
 }

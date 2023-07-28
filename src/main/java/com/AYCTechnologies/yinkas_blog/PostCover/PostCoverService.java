@@ -54,6 +54,7 @@ public class PostCoverService {
         postCover = modelMapper.map(model, PostCover.class);
         postCover.setThumbnailUrl(thumbnailUrl);
         postCover.setPostId(postId);
+        postCover.setIsDeleted(Boolean.FALSE);
         return postCoverRepository.save(postCover);
     }
 
