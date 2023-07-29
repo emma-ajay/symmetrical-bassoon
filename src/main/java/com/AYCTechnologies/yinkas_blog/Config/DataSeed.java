@@ -54,6 +54,18 @@ public class DataSeed {
                 );
                 user1.setRoles(Collections.singleton(role1));
                 userRepository.save(user1);
+                User user2 = new User(
+                        "Sunmola Olayinka",
+                        "olayinks",
+                        "kikswithekoko@gmail.com",
+                        password,
+                        Boolean.TRUE,
+                        Boolean.FALSE,
+                        currentDate
+
+                );
+                user1.setRoles(Collections.singleton(role1));
+                userRepository.save(user1);
             }
 
             if(Objects.isNull(roleRepository.findByName(RoleName.ROLE_CREATOR))){
