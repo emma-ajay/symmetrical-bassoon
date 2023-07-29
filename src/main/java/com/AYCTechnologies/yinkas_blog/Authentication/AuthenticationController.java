@@ -153,8 +153,7 @@ public class AuthenticationController {
         }
 
         User user = modelMapper.map(registerRequest, User.class);
-        String setPassword = registerRequest.getName();
-        String password = passwordEncoder.encode(setPassword);
+        String password = passwordEncoder.encode(registerRequest.getPassword());
         user.setPassword(password);
 
         user.setIsActivated(Boolean.FALSE);

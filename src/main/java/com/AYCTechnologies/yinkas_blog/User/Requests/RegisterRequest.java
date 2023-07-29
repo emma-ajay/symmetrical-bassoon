@@ -19,6 +19,8 @@ public class RegisterRequest {
     private String userName;
 
     private String createdDate;
+
+    private String password;
   
 
 

@@ -54,6 +54,7 @@ public class DataSeed {
                 );
                 user1.setRoles(Collections.singleton(role1));
                 userRepository.save(user1);
+
                 User user2 = new User(
                         "Sunmola Olayinka",
                         "olayinks",
@@ -64,18 +65,20 @@ public class DataSeed {
                         currentDate
 
                 );
-                user1.setRoles(Collections.singleton(role1));
-                userRepository.save(user1);
+                user2.setRoles(Collections.singleton(role1));
+                userRepository.save(user2);
             }
 
-            if(Objects.isNull(roleRepository.findByName(RoleName.ROLE_CREATOR))){
-                Role role1 = new Role(RoleName.ROLE_CREATOR);
-                roleRepository.save(role1);
+            Role role1 = roleRepository.findRole(RoleName.ROLE_CREATOR);
+            if(role1 == null){
+                Role rs = new Role(RoleName.ROLE_CREATOR);
+                roleRepository.save(rs);
             }
 
-            if(Objects.isNull(roleRepository.findByName(RoleName.ROLE_USER))){
-                Role role2 = new Role(RoleName.ROLE_USER);
-                roleRepository.save(role2);
+            Role role2 = roleRepository.findRole(RoleName.ROLE_USER);
+            if(role2 == null){
+                Role rs = new Role(RoleName.ROLE_USER);
+                roleRepository.save(rs);
             }
         };
     }
