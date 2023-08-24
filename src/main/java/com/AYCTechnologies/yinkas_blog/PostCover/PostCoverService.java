@@ -120,6 +120,15 @@ public class PostCoverService {
     }
 
 
+    public void deletePostById(Long id){
+        PostCover postCover = getPostCoverByPostId(id);
+        Long postCoverId = postCover.getPostCoverId();
+        postCover.setPostCoverId(postCoverId);
+        postCover.setIsDeleted(Boolean.TRUE);
+        PostCover rs  =postCoverRepository.save(postCover);
+        
+    }
+
     public PagedResponse<?> postCoverListByUser(int page, int size, String sort, Long userId) {
         if (Objects.equals(sort, "DESC")) {
             Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "publishedDate");

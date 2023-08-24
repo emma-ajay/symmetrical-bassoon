@@ -79,6 +79,8 @@ public class PostCoverController {
 
     @DeleteMapping("/{id}/post")
     public ResponseEntity<?> deletePostById(@PathVariable Long id){
+        postCoverService.deletePostById(id);
+        postService.deletePostById(id);
         return ResponseEntity.ok(new ApiResponse(true,"Post deleted"));
     }
 }

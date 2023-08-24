@@ -3,6 +3,8 @@ package com.AYCTechnologies.yinkas_blog.Post;
 import com.AYCTechnologies.yinkas_blog.Exceptions.BadRequestException;
 import com.AYCTechnologies.yinkas_blog.Html.Html;
 import com.AYCTechnologies.yinkas_blog.Html.HtmlService;
+import com.AYCTechnologies.yinkas_blog.PostCover.PostCover;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
@@ -56,6 +58,7 @@ public class PostService {
     public Post getPostById(Long id) {
         Post post = postRepository.findPostByPostId(id);
         if(Objects.isNull(post)) throw new BadRequestException("Error finding post");
+        if(post.getIsDeleted()) throw new BadRequestException("Error finding post");
         return post;
     }
 
@@ -82,6 +85,14 @@ public class PostService {
         post.setPostId(id);
         post.setIsMain(Boolean.FALSE);
         Post rs = postRepository.save(post);
+    }
+
+       public void deletePostById(Long id){
+        Post post = getPostById(id);
+        post.setPostId(id);
+        post.setIsDeleted(Boolean.TRUE);
+        Post rs  =postRepository.save(post);
+        
     }
 }
 
