@@ -12,7 +12,7 @@ public interface PostCoverRepository extends JpaRepository<PostCover,Long> {
     @Query(value = "select u from PostCover u where u.postId =?1")
     PostCover findByPostId(Long postId);
 
-    @Query(value = "select * from post_cover where isDeleted = false",nativeQuery = true)
+    @Query(value = "select * from post_cover where is_deleted = false",nativeQuery = true)
     Page<PostCover> findAllPostCover(Pageable pageable);
 
     @Query("select u from PostCover u where isDeleted = false and lower(u.category) like lower(:category)")
